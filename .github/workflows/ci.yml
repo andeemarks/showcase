@@ -16,8 +16,8 @@ jobs:
       - name: Set up Elixir and OTP
         uses: erlef/setup-beam@v1
         with:
-          elixir-version: 1.19.5
-          otp-version: 27.2
+          elixir-version: '1.19.5'
+          otp-version: '27.2'
           version-type: 'strict'
 
       - name: Install Hex and Rebar
