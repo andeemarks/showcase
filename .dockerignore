@@ -1,0 +1,7 @@
+/deps
+/_build
+/.git
+/node_modules
+/tmp
+/.DS_Store
+/**/*.swp
