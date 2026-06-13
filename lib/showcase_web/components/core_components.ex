@@ -29,8 +29,8 @@ defmodule ShowcaseWeb.CoreComponents do
   use Phoenix.Component
   use Gettext, backend: ShowcaseWeb.Gettext
 
-  alias Phoenix.LiveView.JS
   alias Phoenix.HTML.Form
+  alias Phoenix.LiveView.JS
 
   @doc """
   Renders flash notices.
