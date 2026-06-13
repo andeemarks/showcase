@@ -17,7 +17,8 @@ jobs:
         uses: erlef/setup-beam@v1
         with:
           elixir-version: 1.19.5
-          otp-version: 26.3
+          otp-version: 26.3.2
+          version-type: 'strict'
 
       - name: Install Hex and Rebar
         run: |
