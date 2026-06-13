@@ -10,16 +10,12 @@ jobs:
   test:
     runs-on: ubuntu-24.04
     name: OTP ${{matrix.otp}} / Elixir ${{matrix.elixir}}
-    strategy:
-      matrix:
-        otp: ['27.3.3']
-        elixir: ['1.18.3']
     steps:
       - uses: actions/checkout@v4
       - uses: erlef/setup-beam@v1
         with:
-          otp-version: ${{matrix.otp}}
-          elixir-version: ${{matrix.elixir}}
+          otp-version: '27.3.3'
+          elixir-version: '1.18.3'
 
       - name: Install Hex and Rebar
         run: |

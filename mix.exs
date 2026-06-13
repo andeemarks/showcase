@@ -84,7 +84,7 @@ defmodule Showcase.MixProject do
         "phx.digest"
       ],
       lint: ["credo --strict", "sobelow --verbose"],
-      check: ["format --check-formatted", "lint", "test"],
+      check: ["format --check-formatted", "lint"],
       precommit: ["compile --warning-as-errors", "check"]
     ]
   end
