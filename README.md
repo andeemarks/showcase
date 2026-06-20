@@ -23,5 +23,3 @@ Example Render commands:
 
 * Build command: `mix local.hex --force && mix local.rebar --force && MIX_ENV=prod mix deps.get --only prod && MIX_ENV=prod mix compile && MIX_ENV=prod mix assets.deploy && MIX_ENV=prod mix release`
 * Start command: `PHX_SERVER=true _build/prod/rel/showcase/bin/showcase start`
-
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
