@@ -12,4 +12,12 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Trigger Render deploy for CI-tested commit
-        run: curl --fail --silent --show-error "${{ secrets.RENDER_DEPLOY_HOOK_URL }}?ref=${{ github.event.workflow_run.head_sha }}"
+        run: |
+          hook_url="${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
+          separator='?'
+          case "$hook_url" in
+            *\?*) separator='&' ;;
+          esac
+
+          curl --fail --silent --show-error \
+            "${hook_url}${separator}ref=${{ github.event.workflow_run.head_sha }}"
