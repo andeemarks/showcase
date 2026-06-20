@@ -48,7 +48,6 @@ config :showcase, ShowcaseWeb.Endpoint,
     web_console_logger: true,
     patterns: [
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
-      ~r"priv/gettext/.*(po)$",
       ~r"lib/showcase_web/(?:controllers|live|components|router)/?.*\.(ex|heex)$"
     ]
   ]
