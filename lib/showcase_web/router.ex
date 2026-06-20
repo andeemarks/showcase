@@ -1,5 +1,6 @@
 defmodule ShowcaseWeb.Router do
   use ShowcaseWeb, :router
+  import Phoenix.LiveDashboard.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -7,7 +8,11 @@ defmodule ShowcaseWeb.Router do
     plug :fetch_live_flash
     plug :put_root_layout, html: {ShowcaseWeb.Layouts, :root}
     plug :protect_from_forgery
-    plug :put_secure_browser_headers, %{"content-security-policy" => "default-src 'self'"}
+
+    plug :put_secure_browser_headers, %{
+      "content-security-policy" =>
+        "default-src 'self'; connect-src 'self' ws: wss:; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self';"
+    }
   end
 
   pipeline :api do
@@ -19,6 +24,7 @@ defmodule ShowcaseWeb.Router do
 
     get "/", PageController, :home
     get "/health", HealthController, :show
+    live_dashboard "/dashboard", metrics: ShowcaseWeb.Telemetry
   end
 
   # Other scopes may use custom stacks.

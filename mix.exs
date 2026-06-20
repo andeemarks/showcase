@@ -21,7 +21,7 @@ defmodule Showcase.MixProject do
   def application do
     [
       mod: {Showcase.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :os_mon]
     ]
   end
 
@@ -58,6 +58,7 @@ defmodule Showcase.MixProject do
       {:req, "~> 0.5"},
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
+      {:phoenix_live_dashboard, "~> 0.8"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
