@@ -14,15 +14,14 @@ Static analysis and CI
 
 Deploying
 
-* Local container build: `docker build -t showcase .`
-* Vercel deployment is supported via `vercel.json` and `Dockerfile`
+* Render is the recommended deployment target for this app.
+* Configure a Render web service to build and run the Phoenix release.
+* Required runtime environment variables include `SECRET_KEY_BASE` and `PHX_HOST`.
+* If you keep `.github/workflows/deploy.yml`, store your Render deploy hook as the `RENDER_DEPLOY_HOOK_URL` GitHub Actions secret. The workflow triggers a deploy only after `CI` succeeds on a `main` branch push, and it deploys the exact commit SHA that passed CI.
+
+Example Render commands:
+
+* Build command: `mix local.hex --force && mix local.rebar --force && MIX_ENV=prod mix deps.get --only prod && MIX_ENV=prod mix compile && MIX_ENV=prod mix assets.deploy && MIX_ENV=prod mix release`
+* Start command: `PHX_SERVER=true _build/prod/rel/showcase/bin/showcase start`
 
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-* Official website: https://www.phoenixframework.org/
-* Guides: https://hexdocs.pm/phoenix/overview.html
-* Docs: https://hexdocs.pm/phoenix
-* Forum: https://elixirforum.com/c/phoenix-forum
-* Source: https://github.com/phoenixframework/phoenix
