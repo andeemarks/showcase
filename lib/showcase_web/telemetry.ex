@@ -13,10 +13,7 @@ defmodule ShowcaseWeb.Telemetry do
       # every 10_000ms. Learn more here: https://hexdocs.pm/telemetry_metrics
       {:telemetry_poller, measurements: periodic_measurements(), period: 10_000},
       {TelemetryMetricsStatsd,
-             metrics: metrics(),
-             host: statsd_host(),
-             port: statsd_port(),
-             global_tags: global_tags()}
+       metrics: metrics(), host: statsd_host(), port: statsd_port(), global_tags: global_tags()}
       # Add reporters as children of your supervision tree.
       # {Telemetry.Metrics.ConsoleReporter, metrics: metrics()}
     ]
@@ -27,7 +24,10 @@ defmodule ShowcaseWeb.Telemetry do
   def metrics do
     [
       summary("phoenix.endpoint.stop.duration", unit: {:native, :millisecond}),
-      summary("phoenix.router_dispatch.stop.duration", tags: [:route], unit: {:native, :millisecond}),
+      summary("phoenix.router_dispatch.stop.duration",
+        tags: [:route],
+        unit: {:native, :millisecond}
+      ),
       summary("vm.memory.total", unit: {:byte, :kilobyte}),
       summary("vm.total_run_queue_lengths.total")
     ]
@@ -42,18 +42,18 @@ defmodule ShowcaseWeb.Telemetry do
   end
 
   defp statsd_host do
-      System.get_env("DD_AGENT_HOST") || "127.0.0.1"
-    end
+    System.get_env("DD_AGENT_HOST") || "127.0.0.1"
+  end
 
-    defp statsd_port do
-      System.get_env("DD_DOGSTATSD_PORT", "8125")
-      |> String.to_integer()
-    end
+  defp statsd_port do
+    System.get_env("DD_DOGSTATSD_PORT", "8125")
+    |> String.to_integer()
+  end
 
-    defp global_tags do
-      [
-        app: "showcase",
-        env: System.get_env("RENDER_ENV") || System.get_env("MIX_ENV") || "prod"
-      ]
-    end
+  defp global_tags do
+    [
+      app: "showcase",
+      env: System.get_env("RENDER_ENV") || System.get_env("MIX_ENV") || "prod"
+    ]
+  end
 end

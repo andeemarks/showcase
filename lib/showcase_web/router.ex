@@ -13,8 +13,7 @@ defmodule ShowcaseWeb.Router do
 
   pipeline :app_csp do
     plug :put_secure_browser_headers, %{
-      "content-security-policy" =>
-        "default-src 'self'; connect-src 'self' ws: wss:;"
+      "content-security-policy" => "default-src 'self'; connect-src 'self' ws: wss:;"
     }
   end
 
