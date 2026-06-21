@@ -11,7 +11,12 @@ defmodule ShowcaseWeb.Telemetry do
     children = [
       # Telemetry poller will execute the given period measurements
       # every 10_000ms. Learn more here: https://hexdocs.pm/telemetry_metrics
-      {:telemetry_poller, measurements: periodic_measurements(), period: 10_000}
+      {:telemetry_poller, measurements: periodic_measurements(), period: 10_000},
+      {TelemetryMetricsStatsd,
+             metrics: metrics(),
+             host: statsd_host(),
+             port: statsd_port(),
+             global_tags: global_tags()}
       # Add reporters as children of your supervision tree.
       # {Telemetry.Metrics.ConsoleReporter, metrics: metrics()}
     ]
@@ -21,42 +26,10 @@ defmodule ShowcaseWeb.Telemetry do
 
   def metrics do
     [
-      # Phoenix Metrics
-      summary("phoenix.endpoint.start.system_time",
-        unit: {:native, :millisecond}
-      ),
-      summary("phoenix.endpoint.stop.duration",
-        unit: {:native, :millisecond}
-      ),
-      summary("phoenix.router_dispatch.start.system_time",
-        tags: [:route],
-        unit: {:native, :millisecond}
-      ),
-      summary("phoenix.router_dispatch.exception.duration",
-        tags: [:route],
-        unit: {:native, :millisecond}
-      ),
-      summary("phoenix.router_dispatch.stop.duration",
-        tags: [:route],
-        unit: {:native, :millisecond}
-      ),
-      summary("phoenix.socket_connected.duration",
-        unit: {:native, :millisecond}
-      ),
-      sum("phoenix.socket_drain.count"),
-      summary("phoenix.channel_joined.duration",
-        unit: {:native, :millisecond}
-      ),
-      summary("phoenix.channel_handled_in.duration",
-        tags: [:event],
-        unit: {:native, :millisecond}
-      ),
-
-      # VM Metrics
+      summary("phoenix.endpoint.stop.duration", unit: {:native, :millisecond}),
+      summary("phoenix.router_dispatch.stop.duration", tags: [:route], unit: {:native, :millisecond}),
       summary("vm.memory.total", unit: {:byte, :kilobyte}),
-      summary("vm.total_run_queue_lengths.total"),
-      summary("vm.total_run_queue_lengths.cpu"),
-      summary("vm.total_run_queue_lengths.io")
+      summary("vm.total_run_queue_lengths.total")
     ]
   end
 
@@ -67,4 +40,20 @@ defmodule ShowcaseWeb.Telemetry do
       # {ShowcaseWeb, :count_users, []}
     ]
   end
+
+  defp statsd_host do
+      System.get_env("DD_AGENT_HOST") || "127.0.0.1"
+    end
+
+    defp statsd_port do
+      System.get_env("DD_DOGSTATSD_PORT", "8125")
+      |> String.to_integer()
+    end
+
+    defp global_tags do
+      [
+        app: "showcase",
+        env: System.get_env("RENDER_ENV") || System.get_env("MIX_ENV") || "prod"
+      ]
+    end
 end
