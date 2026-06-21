@@ -29,7 +29,9 @@ defmodule ShowcaseWeb.Telemetry do
         unit: {:native, :millisecond}
       ),
       summary("vm.memory.total", unit: {:byte, :kilobyte}),
-      summary("vm.total_run_queue_lengths.total")
+      summary("vm.total_run_queue_lengths.total"),
+
+      counter("showcase.widgets.created.count", tags: [:source])
     ]
   end
 
